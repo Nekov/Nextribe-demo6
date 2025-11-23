@@ -59,3 +59,26 @@ export const COUNTRY_STATUS_MAP: Record<string, CountryStatus> = {
   'TUR': CountryStatus.NONE,
   'HRV': CountryStatus.NONE,
 };
+
+// Estimated Average Daily Rate (ADR) per country in USD
+export const COUNTRY_ADR_MAP: Record<string, number> = {
+  'Bulgaria': 120,
+  'Austria': 250,
+  'Romania': 110,
+  'Greece': 200,
+  'Slovenia': 180,
+  'Italy': 220,
+  'Malaysia': 150,
+  'Cyprus': 190,
+  'France': 280,
+  'Germany': 240,
+  'United Kingdom': 260,
+  'Lithuania': 130,
+  'Poland': 125,
+  'Japan': 300,
+  'United States': 350,
+  'Turkey': 140,
+  'Croatia': 170,
+  // Fallback
+  'Unknown': 150
+};

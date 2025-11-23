@@ -41,21 +41,29 @@ const App = () => {
   });
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchData = async () => {
       // Hardcoded admin ID for demo
       const ADMIN_ID = 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11';
 
-      const [countriesData, statsData, leaderboardData, profileData] = await Promise.all([
-        api.getCountries(),
-        api.getGlobalStats(),
-        api.getLeaderboard(),
-        api.getUserProfile(ADMIN_ID)
-      ]);
-      setCountries(countriesData);
-      setGlobalStats(statsData);
-      if (leaderboardData.length > 0) setLeaderboard(leaderboardData);
-      if (profileData) setUserProfile(profileData);
+      try {
+        const [countriesData, statsData, leaderboardData, profileData] = await Promise.all([
+          api.getCountries(),
+          api.getGlobalStats(),
+          api.getLeaderboard(),
+          api.getUserProfile(ADMIN_ID)
+        ]);
+        setCountries(countriesData);
+        setGlobalStats(statsData);
+        if (leaderboardData.length > 0) setLeaderboard(leaderboardData);
+        if (profileData) setUserProfile(profileData);
+      } catch (error) {
+        console.error("Failed to fetch initial data", error);
+      } finally {
+        setIsLoading(false);
+      }
     };
     fetchData();
   }, []);
@@ -232,10 +240,12 @@ const App = () => {
           )}
 
           {activeTab === 'profile' && (
-            userProfile ? (
+            isLoading ? (
+              <div className="p-10 text-center text-white">Profile data loading...</div>
+            ) : userProfile ? (
               <ProfilePage profile={userProfile} />
             ) : (
-              <div className="p-10 text-center text-white">Profile data loading...</div>
+              <div className="p-10 text-center text-white">Profile not found. Please check your connection or login status.</div>
             )
           )}
         </div>
