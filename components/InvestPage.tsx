@@ -148,29 +148,10 @@ const InvestPage: React.FC<InvestPageProps> = () => {
     const estimatedAdr = COUNTRY_ADR_MAP[selectedOpp.country] || COUNTRY_ADR_MAP['Unknown'];
 
     return (
-        <div className="h-full flex flex-col lg:flex-row overflow-hidden bg-[#151725]">
+        <div className="h-full flex flex-col-reverse lg:flex-row overflow-hidden bg-[#151725]">
 
-            {/* Left Side: Opportunities Grid */}
-            <div className="flex-1 h-full overflow-y-auto p-4 md:p-6 custom-scrollbar">
-                <div className="mb-4 md:mb-6">
-                    <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
-                    <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 md:gap-6 pb-6 lg:pb-20">
-                    {opportunities.map(opp => (
-                        <OpportunityCard
-                            key={opp.id}
-                            opportunity={opp}
-                            onSelect={() => setSelectedOpp(opp)}
-                            isSelected={selectedOpp.id === opp.id}
-                        />
-                    ))}
-                </div>
-            </div>
-
-            {/* Right Side: Sticky Calculator */}
-            <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 h-auto lg:h-full overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl z-20 relative">
+            {/* Right Side: Calculator (appears second on mobile due to flex-col-reverse) */}
+            <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 lg:h-full overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl z-20 relative">
                 <div className="sticky top-0 bg-primary pb-4 z-10 border-b border-gray-800 mb-6">
                     <h2 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                         <DollarSign className="text-gold w-5 h-5" /> ROI Calculator
@@ -274,6 +255,25 @@ const InvestPage: React.FC<InvestPageProps> = () => {
                         *Projections are estimates based on historical data and market trends. Returns are not guaranteed.
                     </p>
 
+                </div>
+            </div>
+
+            {/* Left Side: Opportunities Grid (appears first on mobile due to flex-col-reverse) */}
+            <div className="flex-1 lg:h-full overflow-y-auto p-4 md:p-6 custom-scrollbar">
+                <div className="mb-4 md:mb-6">
+                    <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
+                    <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 md:gap-6 pb-6 lg:pb-20">
+                    {opportunities.map(opp => (
+                        <OpportunityCard
+                            key={opp.id}
+                            opportunity={opp}
+                            onSelect={() => setSelectedOpp(opp)}
+                            isSelected={selectedOpp.id === opp.id}
+                        />
+                    ))}
                 </div>
             </div>
 

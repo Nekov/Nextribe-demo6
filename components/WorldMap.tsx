@@ -184,9 +184,11 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
   const width = 960;
   const height = 500;
 
+  // Projection centered on Europe with zoom
   const projection = d3.geoMercator()
-    .scale(150)
-    .translate([width / 2, height / 1.5]);
+    .scale(400)  // Increased from 150 to zoom in
+    .center([15, 52])  // Centered on Europe (longitude, latitude)
+    .translate([width / 2, height / 2]);
 
   const pathGenerator = d3.geoPath().projection(projection);
 
