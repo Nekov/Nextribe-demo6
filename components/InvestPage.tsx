@@ -259,13 +259,13 @@ const InvestPage: React.FC<InvestPageProps> = () => {
             </div>
 
             {/* Left Side: Opportunities Grid (appears first on mobile due to flex-col-reverse) */}
-            <div className="flex-1 lg:h-full lg:overflow-y-auto p-4 md:p-6 custom-scrollbar pt-6 lg:pt-4 min-h-[400px]">
+            <div className="w-full lg:flex-1 lg:h-full lg:overflow-y-auto p-4 md:p-6 custom-scrollbar">
                 <div className="mb-4 md:mb-6">
                     <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
                     <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 md:gap-6 pb-6 lg:pb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 md:gap-6 pb-6">
                     {opportunities.map(opp => (
                         <OpportunityCard
                             key={opp.id}

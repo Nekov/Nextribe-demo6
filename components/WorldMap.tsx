@@ -40,18 +40,20 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
 
   // D3 Zoom Behavior
   const zoom = useMemo(() => d3.zoom<SVGSVGElement, unknown>()
-    .scaleExtent([1.5, 8])  // Increased min from 1 to 1.5 to prevent zooming out too far
+    .scaleExtent([2.0, 8])  // Increased min from 1.5 to 2.0 to prevent zooming out too far
     .on('zoom', (event) => {
       if (gRef.current) {
         d3.select(gRef.current).attr('transform', event.transform);
       }
     }), []);
 
-  // Attach zoom behavior to SVG
+  // Attach zoom behavior to SVG and set initial zoom
   useEffect(() => {
     if (!loading && svgRef.current) {
       const svg = d3.select(svgRef.current);
       svg.call(zoom);
+      // Set initial zoom to minimum level (2.0)
+      svg.call(zoom.transform, d3.zoomIdentity.scale(2.0));
     }
   }, [loading, zoom]);
 
