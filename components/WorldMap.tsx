@@ -4,7 +4,7 @@ import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 import { FeatureCollection, Geometry } from 'geojson';
 import { CountryStatus, CountryData } from '../types';
-import { COLORS, COUNTRY_STATUS_MAP, getMockCountryData } from '../constants';
+import { COLORS, COUNTRY_STATUS_MAP } from '../constants';
 import { Loader2, Plus, Minus, RotateCcw } from 'lucide-react';
 
 interface WorldMapProps {
@@ -16,9 +16,9 @@ interface WorldMapProps {
 const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countries }) => {
   const [geographies, setGeographies] = useState<FeatureCollection<Geometry> | null>(null);
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
-  const [tooltipData, setTooltipData] = useState<{x: number, y: number, data: CountryData} | null>(null);
+  const [tooltipData, setTooltipData] = useState<{ x: number, y: number, data: CountryData } | null>(null);
   const [loading, setLoading] = useState(true);
-  
+
   const svgRef = useRef<SVGSVGElement>(null);
   const gRef = useRef<SVGGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -98,11 +98,11 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
       '616': 'POL', // Poland
       '392': 'JPN'  // Japan
     };
-    
+
     // Pad ID with leading zeros if needed (topojson IDs are usually numbers, but keys in map are strings)
     const paddedId = id.toString().padStart(3, '0');
     const alpha3 = isoMap[paddedId];
-    
+
     // Lookup status from props
     const countryData = countries.find(c => c.id === alpha3);
     const status = countryData ? countryData.status : CountryStatus.NONE;
@@ -120,9 +120,9 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
       default: return COLORS.NONE;
     }
   };
-  
+
   const getCountryName = (feature: any) => {
-      return feature.properties.name; 
+    return feature.properties.name;
   };
 
   // Mouse Event Handlers
@@ -130,28 +130,48 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
     const countryId = feature.id?.toString().padStart(3, '0') || '';
     const name = getCountryName(feature);
     const { code, status } = getCountryCodeAndStatus(countryId);
-    
+
     setHoveredCountryId(countryId);
-    
+
     // Find data from props or fallback to basic info
     const foundData = countries.find(c => c.id === code);
-    const data = foundData || getMockCountryData(code, name, status);
-    
+    // If no data found, create a minimal object for tooltip to avoid crash
+    const data = foundData || {
+      id: code,
+      name: name,
+      status: status,
+      progress: 0,
+      description: '',
+      locationsProposed: 0,
+      locationsTarget: 0,
+      architectsRecommended: 0,
+      architectsTarget: 0,
+      lawyerRecommended: false,
+      ambassadorApplications: 0,
+      ambassadorTarget: 0,
+      hospitalityPartner: false,
+      contentCreators: 0,
+      contentCreatorsTarget: 0,
+      mediaPartners: false,
+      b2bClients: 0,
+      b2bClientsTarget: 0
+    } as CountryData;
+
     // Calculate position relative to container
     if (containerRef.current) {
-       const rect = containerRef.current.getBoundingClientRect();
-       const x = event.clientX - rect.left;
-       const y = event.clientY - rect.top;
-       setTooltipData({ x, y, data });
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      setTooltipData({ x, y, data });
     }
   };
 
   const handleMouseMove = (event: React.MouseEvent) => {
     if (containerRef.current && tooltipData) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        setTooltipData(prev => prev ? { ...prev, x, y } : null);
+      const rect = containerRef.current.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      setTooltipData(prev => prev ? { ...prev, x, y } : null);
     }
   };
 
@@ -171,76 +191,76 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
   const pathGenerator = d3.geoPath().projection(projection);
 
   if (loading) {
-    return <div className="flex items-center justify-center h-full w-full text-gold"><Loader2 className="animate-spin w-10 h-10"/></div>;
+    return <div className="flex items-center justify-center h-full w-full text-gold"><Loader2 className="animate-spin w-10 h-10" /></div>;
   }
 
   return (
-    <div 
-        ref={containerRef}
-        className={`relative overflow-hidden ${className}`}
+    <div
+      ref={containerRef}
+      className={`relative overflow-hidden ${className}`}
     >
-      
+
       {/* Legend */}
       <div className="absolute top-4 left-4 bg-primary/90 backdrop-blur-sm p-3 rounded-lg border border-gray-700 z-10 shadow-lg pointer-events-none select-none">
         <h3 className="text-sm font-semibold text-gold mb-2">Legend</h3>
         <div className="space-y-2 text-xs">
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{background: COLORS.NONE}}></div> <span className="text-typography-grey">Available</span></div>
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{background: COLORS.PROPOSED}}></div> <span className="text-typography-grey">Land Proposed</span></div>
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{background: COLORS.AMBASSADOR}}></div> <span className="text-white">Ambassador</span></div>
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{background: COLORS.SIGNED}}></div> <span className="text-white">Land Signed</span></div>
-            <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{background: COLORS.DEVELOPMENT}}></div> <span className="text-white">In Development</span></div>
+          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{ background: COLORS.NONE }}></div> <span className="text-typography-grey">Available</span></div>
+          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{ background: COLORS.PROPOSED }}></div> <span className="text-typography-grey">Land Proposed</span></div>
+          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{ background: COLORS.AMBASSADOR }}></div> <span className="text-white">Ambassador</span></div>
+          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{ background: COLORS.SIGNED }}></div> <span className="text-white">Land Signed</span></div>
+          <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{ background: COLORS.DEVELOPMENT }}></div> <span className="text-white">In Development</span></div>
         </div>
       </div>
 
-       {/* Zoom Controls */}
-       <div className="absolute bottom-6 left-4 flex flex-col gap-2 z-10">
+      {/* Zoom Controls */}
+      <div className="absolute bottom-6 left-4 flex flex-col gap-2 z-10">
         <button onClick={handleZoomIn} className="p-2 bg-primary/90 border border-gray-700 rounded-lg hover:bg-primary-light text-white transition-colors shadow-lg" title="Zoom In">
           <Plus className="w-4 h-4" />
         </button>
         <button onClick={handleZoomOut} className="p-2 bg-primary/90 border border-gray-700 rounded-lg hover:bg-primary-light text-white transition-colors shadow-lg" title="Zoom Out">
           <Minus className="w-4 h-4" />
         </button>
-         <button onClick={handleResetZoom} className="p-2 bg-primary/90 border border-gray-700 rounded-lg hover:bg-primary-light text-white transition-colors shadow-lg" title="Reset Map">
+        <button onClick={handleResetZoom} className="p-2 bg-primary/90 border border-gray-700 rounded-lg hover:bg-primary-light text-white transition-colors shadow-lg" title="Reset Map">
           <RotateCcw className="w-4 h-4" />
         </button>
       </div>
 
       {/* Tooltip */}
       {tooltipData && (
-        <div 
-            className="absolute z-50 pointer-events-none" 
-            style={{ 
-                left: tooltipData.x + 15, 
-                top: tooltipData.y + 15,
-            }}
+        <div
+          className="absolute z-50 pointer-events-none"
+          style={{
+            left: tooltipData.x + 15,
+            top: tooltipData.y + 15,
+          }}
         >
-            <div className="bg-primary/95 backdrop-blur-md border border-gray-700 p-3 rounded-xl shadow-2xl min-w-[200px] animate-fade-in">
-                <div className="flex justify-between items-start gap-4 mb-2">
-                    <div>
-                        <div className="text-white font-bold text-sm">{tooltipData.data.name}</div>
-                        <div className="text-xs text-typography-grey">
-                            {tooltipData.data.ambassador ? tooltipData.data.ambassador.name : "Open Position"}
-                        </div>
-                    </div>
-                    {/* Circular Progress */}
-                    <div className="relative w-10 h-10 flex items-center justify-center">
-                        <svg className="w-full h-full" viewBox="0 0 36 36">
-                            <path className="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
-                            <path className="text-gold" strokeDasharray={`${tooltipData.data.progress}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
-                        </svg>
-                        <div className="absolute text-[9px] font-bold text-white">{tooltipData.data.progress}%</div>
-                    </div>
+          <div className="bg-primary/95 backdrop-blur-md border border-gray-700 p-3 rounded-xl shadow-2xl min-w-[200px] animate-fade-in">
+            <div className="flex justify-between items-start gap-4 mb-2">
+              <div>
+                <div className="text-white font-bold text-sm">{tooltipData.data.name}</div>
+                <div className="text-xs text-typography-grey">
+                  {tooltipData.data.ambassador ? tooltipData.data.ambassador.name : "Open Position"}
                 </div>
-                <div className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: getStatusColor(tooltipData.data.status) }}>
-                    {tooltipData.data.status === 'none' ? 'Available' : tooltipData.data.status}
-                </div>
+              </div>
+              {/* Circular Progress */}
+              <div className="relative w-10 h-10 flex items-center justify-center">
+                <svg className="w-full h-full" viewBox="0 0 36 36">
+                  <path className="text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
+                  <path className="text-gold" strokeDasharray={`${tooltipData.data.progress}, 100`} d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="4" />
+                </svg>
+                <div className="absolute text-[9px] font-bold text-white">{tooltipData.data.progress}%</div>
+              </div>
             </div>
+            <div className="text-[10px] uppercase tracking-wider font-semibold" style={{ color: getStatusColor(tooltipData.data.status) }}>
+              {tooltipData.data.status === 'none' ? 'Available' : tooltipData.data.status}
+            </div>
+          </div>
         </div>
       )}
 
-      <svg 
+      <svg
         ref={svgRef}
-        viewBox={`0 0 ${width} ${height}`} 
+        viewBox={`0 0 ${width} ${height}`}
         className="w-full h-full cursor-move"
         style={{ display: 'block' }}
       >
@@ -264,8 +284,8 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
                 onClick={(e) => {
-                    e.stopPropagation();
-                    onCountryClick(countryId, getCountryName(feature));
+                  e.stopPropagation();
+                  onCountryClick(countryId, getCountryName(feature));
                 }}
               />
             );
