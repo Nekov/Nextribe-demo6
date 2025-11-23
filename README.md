@@ -1,3 +1,10 @@
+* What: Platform for Community-driven eco hospitality projects. People can co-invest and earn from cabins around the world. 
+* Why: Because I want to create the biggest network of nature spaces. 
+* How: Its live: https://nextribe-demo.vercel.app/ 
+* What: The frontend - the map, dashboard, investment interface, profile with loyalty and points. 
+What: More listings, user authentication. 
+
+
 <div align="center">
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
