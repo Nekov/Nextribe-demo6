@@ -1,14 +1,15 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import WorldMap from './components/WorldMap';
 import Dashboard from './components/Dashboard';
 import CountryDetail from './components/CountryDetail';
 import ProfilePage from './components/ProfilePage';
 import InvestPage from './components/InvestPage';
-import { CountryData, CountryStatus } from './types';
+import { CountryData, CountryStatus, GlobalStats, LeaderboardEntry } from './types';
 import { getMockCountryData, MOCK_GLOBAL_STATS, MOCK_LEADERBOARD, MOCK_USER_PROFILE, MOCK_OPPORTUNITIES } from './constants';
 import { LayoutDashboard, Globe, LogOut, TrendingUp, Moon, MapPin, Users, PieChart, User } from 'lucide-react';
+import { api } from './services/api';
 
 const SummaryItem = ({ label, value, icon: Icon, color }: { label: string, value: string | number, icon: any, color: string }) => (
   <div className="flex items-center gap-3 px-2 md:px-4 border-r border-gray-700 last:border-0">
@@ -28,20 +29,36 @@ const App = () => {
   const [activeTab, setActiveTab] = useState<'map' | 'dashboard' | 'invest' | 'profile'>('map');
   const [selectedCountry, setSelectedCountry] = useState<CountryData | null>(null);
   const [isApplying, setIsApplying] = useState(false);
+  const [countries, setCountries] = useState<CountryData[]>([]);
+  const [globalStats, setGlobalStats] = useState<GlobalStats>(MOCK_GLOBAL_STATS);
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>(MOCK_LEADERBOARD);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const [countriesData, statsData, leaderboardData] = await Promise.all([
+        api.getCountries(),
+        api.getGlobalStats(),
+        api.getLeaderboard()
+      ]);
+      setCountries(countriesData);
+      setGlobalStats(statsData);
+      if (leaderboardData.length > 0) setLeaderboard(leaderboardData);
+    };
+    fetchData();
+  }, []);
 
   const handleCountryClick = (id: string, name: string) => {
-    // Lookup logic for demo purposes to match previous behavior
-    let mockStatus = CountryStatus.NONE;
-    if(name === "Greece") mockStatus = CountryStatus.DEVELOPMENT;
-    else if(name === "Italy") mockStatus = CountryStatus.AMBASSADOR;
-    else if(name === "Spain") mockStatus = CountryStatus.SIGNED;
-    else if(name === "United States of America") mockStatus = CountryStatus.NONE;
-    else {
-       mockStatus = Math.random() > 0.8 ? CountryStatus.SIGNED : CountryStatus.NONE; 
+    // Lookup from fetched data
+    const foundCountry = countries.find(c => c.id === id); // id passed from WorldMap is now Alpha-3 code if available
+    
+    if (foundCountry) {
+        setSelectedCountry(foundCountry);
+    } else {
+        // Fallback for countries not in DB yet (display as available/none)
+        const mockStatus = CountryStatus.NONE;
+        const data = getMockCountryData(id, name, mockStatus);
+        setSelectedCountry(data);
     }
-
-    const data = getMockCountryData(id, name, mockStatus);
-    setSelectedCountry(data);
   };
 
   const handleApply = () => {
@@ -133,25 +150,25 @@ const App = () => {
               <div className="flex flex-row bg-primary/90 backdrop-blur-xl p-2 rounded-2xl border border-gray-700 shadow-2xl shadow-black/50">
                   <SummaryItem 
                       label="Total Distributed" 
-                      value={`$${MOCK_GLOBAL_STATS.totalDistributed.toLocaleString()}`} 
+                      value={`$${globalStats.totalDistributed.toLocaleString()}`} 
                       icon={TrendingUp} 
                       color="text-green-400" 
                   />
                   <SummaryItem 
                       label="Active Markets" 
-                      value={MOCK_GLOBAL_STATS.activeCountriesStats.totalProposed} 
+                      value={globalStats.activeCountriesStats.totalProposed} 
                       icon={MapPin} 
                       color="text-gold" 
                   />
                   <SummaryItem 
                       label="Comm. Points" 
-                      value={MOCK_GLOBAL_STATS.communityPoints.monthly.value.toLocaleString()} 
+                      value={globalStats.communityPoints.monthly.value.toLocaleString()} 
                       icon={Users} 
                       color="text-blue-400" 
                   />
                   <SummaryItem 
                       label="Nights Goal" 
-                      value={`${((MOCK_GLOBAL_STATS.monthlyNightsGoal.current / MOCK_GLOBAL_STATS.monthlyNightsGoal.target)*100).toFixed(0)}%`} 
+                      value={`${((globalStats.monthlyNightsGoal.current / globalStats.monthlyNightsGoal.target)*100).toFixed(0)}%`} 
                       icon={Moon} 
                       color="text-purple-400" 
                   />
@@ -165,6 +182,7 @@ const App = () => {
                 <WorldMap 
                     onCountryClick={handleCountryClick} 
                     className="w-full h-full absolute inset-0"
+                    countries={countries}
                 />
             )}
             
@@ -173,8 +191,8 @@ const App = () => {
                     <div className="max-w-7xl mx-auto">
                          <h2 className="text-2xl font-bold text-white mb-6">Performance Overview</h2>
                          <Dashboard 
-                            stats={MOCK_GLOBAL_STATS} 
-                            leaderboard={MOCK_LEADERBOARD} 
+                            stats={globalStats} 
+                            leaderboard={leaderboard} 
                             onViewFullLeaderboard={() => setActiveTab('profile')} // Linking to profile/leaderboard view
                         />
                     </div>
@@ -182,7 +200,7 @@ const App = () => {
             )}
 
             {activeTab === 'invest' && (
-                <InvestPage opportunities={MOCK_OPPORTUNITIES} />
+                <InvestPage />
             )}
 
             {activeTab === 'profile' && (

@@ -10,9 +10,10 @@ import { Loader2, Plus, Minus, RotateCcw } from 'lucide-react';
 interface WorldMapProps {
   onCountryClick: (geoId: string, name: string) => void;
   className?: string;
+  countries: CountryData[];
 }
 
-const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className }) => {
+const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countries }) => {
   const [geographies, setGeographies] = useState<FeatureCollection<Geometry> | null>(null);
   const [hoveredCountryId, setHoveredCountryId] = useState<string | null>(null);
   const [tooltipData, setTooltipData] = useState<{x: number, y: number, data: CountryData} | null>(null);
@@ -100,9 +101,12 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className }) => {
     
     // Pad ID with leading zeros if needed (topojson IDs are usually numbers, but keys in map are strings)
     const paddedId = id.toString().padStart(3, '0');
-    
     const alpha3 = isoMap[paddedId];
-    const status = alpha3 ? COUNTRY_STATUS_MAP[alpha3] : CountryStatus.NONE;
+    
+    // Lookup status from props
+    const countryData = countries.find(c => c.id === alpha3);
+    const status = countryData ? countryData.status : CountryStatus.NONE;
+
     return { code: alpha3 || paddedId, status };
   };
 
@@ -129,8 +133,9 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className }) => {
     
     setHoveredCountryId(countryId);
     
-    // Generate data for tooltip using the Alpha-3 code (code) as ID if available, so constants can lookup specific ambassadors
-    const data = getMockCountryData(code, name, status);
+    // Find data from props or fallback to basic info
+    const foundData = countries.find(c => c.id === code);
+    const data = foundData || getMockCountryData(code, name, status);
     
     // Calculate position relative to container
     if (containerRef.current) {

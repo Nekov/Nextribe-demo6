@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CabinOpportunity } from '../types';
-import { MapPin, Users, ArrowRight, DollarSign, Info, Calendar, TrendingUp, Moon, CheckCircle2, Check } from 'lucide-react';
+import { MapPin, Users, ArrowRight, DollarSign, Info, Calendar, TrendingUp, Moon, CheckCircle2, Check, Loader2 } from 'lucide-react';
+import { api } from '../services/api';
 
-interface InvestPageProps {
-  opportunities: CabinOpportunity[];
-}
+interface InvestPageProps {}
 
 interface OpportunityCardProps {
   opportunity: CabinOpportunity;
@@ -28,7 +27,7 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, onSelect
             {/* Image Slider */}
             <div className="relative h-48 overflow-hidden">
                 <img 
-                    src={opportunity.images[activeImgIndex]} 
+                    src={opportunity.images[activeImgIndex] || 'https://placehold.co/600x400?text=No+Image'} 
                     alt={opportunity.title} 
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                 />
@@ -39,7 +38,7 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, onSelect
                 </div>
 
                 <div className="absolute bottom-2 right-2 bg-black/60 px-2 py-1 rounded text-xs text-white pointer-events-none">
-                    {activeImgIndex + 1}/{opportunity.images.length}
+                    {activeImgIndex + 1}/{opportunity.images.length || 1}
                 </div>
                 <div className="absolute top-3 left-3 bg-gold text-primary font-bold text-xs px-2 py-1 rounded shadow-sm">
                     ROI: {opportunity.expectedRoiPct}%
@@ -99,9 +98,31 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, onSelect
     );
 }
 
-const InvestPage: React.FC<InvestPageProps> = ({ opportunities }) => {
-  const [selectedOpp, setSelectedOpp] = useState<CabinOpportunity>(opportunities[0]);
-  const [sharesCount, setSharesCount] = useState<number>(1); // Number of shares selected (1 to 12)
+const InvestPage: React.FC<InvestPageProps> = () => {
+  const [opportunities, setOpportunities] = useState<CabinOpportunity[]>([]);
+  const [selectedOpp, setSelectedOpp] = useState<CabinOpportunity | null>(null);
+  const [sharesCount, setSharesCount] = useState<number>(1);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchOpps = async () => {
+        const data = await api.getOpportunities();
+        setOpportunities(data);
+        if (data.length > 0) {
+            setSelectedOpp(data[0]);
+        }
+        setLoading(false);
+    };
+    fetchOpps();
+  }, []);
+
+  if (loading) {
+      return <div className="flex items-center justify-center h-full text-gold"><Loader2 className="animate-spin w-10 h-10"/></div>;
+  }
+
+  if (!selectedOpp) {
+      return <div className="flex items-center justify-center h-full text-white">No opportunities found.</div>;
+  }
 
   // Calculator Logic
   // Assuming each property is divided into 12 shares total
