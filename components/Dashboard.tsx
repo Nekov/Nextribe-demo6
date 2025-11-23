@@ -206,9 +206,9 @@ const Dashboard: React.FC<DashboardProps> = ({ stats, leaderboard, onViewFullLea
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-auto lg:h-40">
                 <StatCard
                     title="Total Distributed"
-                    value={`$${stats.totalDistributed.toLocaleString()}`}
+                    value="$566,444"
                     icon={DollarSign}
-                    subValue="+12% this month"
+                    subValue="Paid to community"
                     colorClass="text-green-400"
                 />
                 <CommunityPointsCard points={stats.communityPoints} />
@@ -231,6 +231,20 @@ const Dashboard: React.FC<DashboardProps> = ({ stats, leaderboard, onViewFullLea
                     title="Most Active Market (Volume)"
                     country={stats.activeCountriesNights}
                     value={stats.activeCountriesNights.value.toLocaleString()}
+                    subLabel="Nights Booked"
+                    type="nights"
+                />
+                <CountryHighlightCard
+                    title="Top Country (Occupancy) – Austria"
+                    country={{ name: "Austria", code: "at" }}
+                    value="78%"
+                    subLabel="Avg. Occupancy"
+                    type="occupancy"
+                />
+                <CountryHighlightCard
+                    title="Top Country (Nights) – Greece"
+                    country={{ name: "Greece", code: "gr" }}
+                    value={12345}
                     subLabel="Nights Booked"
                     type="nights"
                 />
