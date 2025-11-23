@@ -26,6 +26,19 @@
       ::-webkit-scrollbar-thumb:hover {
         background: #D9A441; 
       }
+
+      /* Mobile Drawer Animation */
+      @keyframes slideInLeft {
+        from {
+          transform: translateX(-100%);
+        }
+        to {
+          transform: translateX(0);
+        }
+      }
+      .animate-slide-in-left {
+        animation: slideInLeft 0.3s ease-out;
+      }
     </style>
     <script>
       tailwind.config = {

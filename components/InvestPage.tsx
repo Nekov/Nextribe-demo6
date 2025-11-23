@@ -151,13 +151,13 @@ const InvestPage: React.FC<InvestPageProps> = () => {
         <div className="h-full flex flex-col lg:flex-row overflow-hidden bg-[#151725]">
 
             {/* Left Side: Opportunities Grid */}
-            <div className="flex-1 h-full overflow-y-auto p-6 custom-scrollbar">
-                <div className="mb-6">
-                    <h1 className="text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
-                    <p className="text-typography-grey text-sm">Select a project from our global network to simulate your returns.</p>
+            <div className="flex-1 h-full overflow-y-auto p-4 md:p-6 custom-scrollbar">
+                <div className="mb-4 md:mb-6">
+                    <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
+                    <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 pb-20">
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 md:gap-6 pb-6 lg:pb-20">
                     {opportunities.map(opp => (
                         <OpportunityCard
                             key={opp.id}
@@ -170,15 +170,15 @@ const InvestPage: React.FC<InvestPageProps> = () => {
             </div>
 
             {/* Right Side: Sticky Calculator */}
-            <div className="w-full lg:w-[400px] bg-primary border-l border-gray-800 h-auto lg:h-full overflow-y-auto custom-scrollbar p-6 shadow-2xl z-20 relative">
+            <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 h-auto lg:h-full overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl z-20 relative">
                 <div className="sticky top-0 bg-primary pb-4 z-10 border-b border-gray-800 mb-6">
-                    <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                    <h2 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                         <DollarSign className="text-gold w-5 h-5" /> ROI Calculator
                     </h2>
                     <p className="text-xs text-typography-grey mt-1">Simulating returns for <span className="text-gold font-semibold">{selectedOpp.title}</span></p>
                 </div>
 
-                <div className="space-y-8">
+                <div className="space-y-6 md:space-y-8">
                     {/* Share Selection Slider */}
                     <div>
                         <label className="text-sm font-medium text-white mb-4 flex justify-between">
@@ -212,7 +212,7 @@ const InvestPage: React.FC<InvestPageProps> = () => {
                     {/* Investment Cost */}
                     <div className="bg-primary-light p-4 rounded-xl border border-gray-800">
                         <div className="text-xs text-typography-grey uppercase font-semibold mb-1">Required Investment</div>
-                        <div className="text-3xl font-bold text-white">${investmentCost.toLocaleString()}</div>
+                        <div className="text-2xl md:text-3xl font-bold text-white">${investmentCost.toLocaleString()}</div>
                     </div>
 
                     {/* Returns Breakdown */}
@@ -220,26 +220,26 @@ const InvestPage: React.FC<InvestPageProps> = () => {
                         <div className="flex items-center justify-between p-3 border-b border-gray-800">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-purple-900/30 rounded text-purple-400"><Moon className="w-4 h-4" /></div>
-                                <span className="text-sm text-typography-grey">Free Nights / Year</span>
+                                <span className="text-xs md:text-sm text-typography-grey">Free Nights / Year</span>
                             </div>
-                            <span className="font-bold text-white text-lg">{Math.floor(freeNights)}</span>
+                            <span className="font-bold text-white text-base md:text-lg">{Math.floor(freeNights)}</span>
                         </div>
 
                         <div className="flex items-center justify-between p-3 border-b border-gray-800">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-blue-900/30 rounded text-blue-400"><DollarSign className="w-4 h-4" /></div>
-                                <span className="text-sm text-typography-grey">Est. Country ADR</span>
+                                <span className="text-xs md:text-sm text-typography-grey">Est. Country ADR</span>
                             </div>
-                            <span className="font-bold text-white text-lg">${estimatedAdr}</span>
+                            <span className="font-bold text-white text-base md:text-lg">${estimatedAdr}</span>
                         </div>
 
                         <div className="flex items-center justify-between p-3 border-b border-gray-800">
                             <div className="flex items-center gap-3">
                                 <div className="p-2 bg-green-900/30 rounded text-green-400"><TrendingUp className="w-4 h-4" /></div>
-                                <span className="text-sm text-typography-grey">Est. Yearly Cash ROI</span>
+                                <span className="text-xs md:text-sm text-typography-grey">Est. Yearly Cash ROI</span>
                             </div>
                             <div className="text-right">
-                                <span className="font-bold text-green-400 text-lg">+${yearlyRoiVal.toLocaleString()}</span>
+                                <span className="font-bold text-green-400 text-base md:text-lg">+${yearlyRoiVal.toLocaleString()}</span>
                                 <div className="text-[10px] text-typography-grey">({selectedOpp.expectedRoiPct}%)</div>
                             </div>
                         </div>
@@ -252,14 +252,14 @@ const InvestPage: React.FC<InvestPageProps> = () => {
                         </h4>
                         <div className="flex justify-between items-end mb-2">
                             <span className="text-xs text-typography-grey">5 Years</span>
-                            <span className="font-mono text-white">${val5Years.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                            <span className="font-mono text-white text-sm md:text-base">${val5Years.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                         </div>
                         <div className="w-full h-1 bg-gray-700 rounded-full mb-3">
                             <div className="h-full bg-gold rounded-full" style={{ width: '60%' }}></div>
                         </div>
                         <div className="flex justify-between items-end mb-2">
                             <span className="text-xs text-typography-grey">10 Years</span>
-                            <span className="font-mono text-white">${val10Years.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
+                            <span className="font-mono text-white text-sm md:text-base">${val10Years.toLocaleString(undefined, { maximumFractionDigits: 0 })}</span>
                         </div>
                         <div className="w-full h-1 bg-gray-700 rounded-full">
                             <div className="h-full bg-gold rounded-full" style={{ width: '85%' }}></div>
@@ -267,7 +267,7 @@ const InvestPage: React.FC<InvestPageProps> = () => {
                     </div>
 
                     {/* Call to Action */}
-                    <button className="w-full bg-gold hover:bg-yellow-500 text-primary font-bold py-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
+                    <button className="w-full bg-gold hover:bg-yellow-500 text-primary font-bold py-3 md:py-4 rounded-lg shadow-lg transition-transform transform hover:scale-105 flex items-center justify-center gap-2">
                         <Calendar className="w-5 h-5" /> Book Session
                     </button>
                     <p className="text-[10px] text-center text-gray-500">

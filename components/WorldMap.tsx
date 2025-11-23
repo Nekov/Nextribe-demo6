@@ -201,7 +201,7 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
     >
 
       {/* Legend */}
-      <div className="absolute top-4 left-4 bg-primary/90 backdrop-blur-sm p-3 rounded-lg border border-gray-700 z-10 shadow-lg pointer-events-none select-none">
+      <div className="absolute bottom-20 right-4 md:top-4 md:left-4 md:bottom-auto md:right-auto bg-primary/90 backdrop-blur-sm p-3 rounded-lg border border-gray-700 z-10 shadow-lg pointer-events-none select-none">
         <h3 className="text-sm font-semibold text-gold mb-2">Legend</h3>
         <div className="space-y-2 text-xs">
           <div className="flex items-center gap-2"><div className="w-3 h-3 rounded-full" style={{ background: COLORS.NONE }}></div> <span className="text-typography-grey">Available</span></div>
