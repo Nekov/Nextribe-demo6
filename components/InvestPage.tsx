@@ -148,10 +148,10 @@ const InvestPage: React.FC<InvestPageProps> = () => {
     const estimatedAdr = COUNTRY_ADR_MAP[selectedOpp.country] || COUNTRY_ADR_MAP['Unknown'];
 
     return (
-        <div className="h-full flex flex-col-reverse lg:flex-row overflow-hidden bg-[#151725]">
+        <div className="lg:h-full flex flex-col-reverse lg:flex-row overflow-y-auto lg:overflow-hidden bg-[#151725]">
 
             {/* Right Side: Calculator (appears second on mobile due to flex-col-reverse) */}
-            <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 lg:h-full overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl lg:z-20 relative">
+            <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 lg:h-full overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl lg:z-20 relative shrink-0">
                 <div className="lg:sticky top-0 bg-primary pb-4 border-b border-gray-800 mb-6">
                     <h2 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                         <DollarSign className="text-gold w-5 h-5" /> ROI Calculator
@@ -259,7 +259,7 @@ const InvestPage: React.FC<InvestPageProps> = () => {
             </div>
 
             {/* Left Side: Opportunities Grid (appears first on mobile due to flex-col-reverse) */}
-            <div className="flex-1 lg:h-full overflow-y-auto p-4 md:p-6 custom-scrollbar pt-6 lg:pt-4">
+            <div className="flex-1 lg:h-full lg:overflow-y-auto p-4 md:p-6 custom-scrollbar pt-6 lg:pt-4 min-h-[400px]">
                 <div className="mb-4 md:mb-6">
                     <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
                     <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
