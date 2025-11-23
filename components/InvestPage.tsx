@@ -90,7 +90,7 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, onSelect
                         <span className="text-xs text-typography-grey uppercase">Available Shares</span>
                         <span className="font-bold text-gold">{opportunity.availableSharesPct}%</span>
                     </div>
-                    <div className={`w-full border transition-colors py-2 rounded text-sm font-bold flex items-center justify-center gap-2 ${isSelected ? 'bg-gold text-primary border-gold shadow-sm' : 'bg-primary text-white border-gray-700 group-hover:border-gold group-hover:text-gold'}`}>
+                    <div className={`w-full border transition-colors py-2 rounded text-sm font-bold flex items-center justify-center gap-2 ${isSelected ? 'bg-gold text-primary border-gold shadow-sm' : 'bg-primary text-white border-gray-700 group-hover:border-gold group-hover:text-gold'}`} onClick={() => setShowRoiModal(true)}>
                         {isSelected ? 'Viewing ROI' : 'Calculate ROI'} <ArrowRight className="w-4 h-4" />
                     </div>
                 </div>
@@ -102,8 +102,10 @@ const OpportunityCard: React.FC<OpportunityCardProps> = ({ opportunity, onSelect
 const InvestPage: React.FC<InvestPageProps> = () => {
     const [opportunities, setOpportunities] = useState<CabinOpportunity[]>([]);
     const [selectedOpp, setSelectedOpp] = useState<CabinOpportunity | null>(null);
+    const [showRoiModal, setShowRoiModal] = useState(false);
     const [sharesCount, setSharesCount] = useState<number>(1);
     const [loading, setLoading] = useState(true);
+
 
     useEffect(() => {
         const fetchOpps = async () => {
@@ -148,7 +150,7 @@ const InvestPage: React.FC<InvestPageProps> = () => {
     const estimatedAdr = COUNTRY_ADR_MAP[selectedOpp.country] || COUNTRY_ADR_MAP['Unknown'];
 
     return (
-        <div className="lg:h-full flex flex-col-reverse lg:flex-row overflow-y-auto lg:overflow-hidden bg-[#151725]">
+        <div className="lg:h-full flex flex-col-reverse lg:flex-row h-screen overflow-y-auto bg-[#151725]">
 
             {/* Right Side: Calculator (appears second on mobile due to flex-col-reverse) */}
             <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 lg:h-full overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl lg:z-20 relative shrink-0">
@@ -259,7 +261,7 @@ const InvestPage: React.FC<InvestPageProps> = () => {
             </div>
 
             {/* Left Side: Opportunities Grid (appears first on mobile due to flex-col-reverse) */}
-            <div className="w-full lg:flex-1 lg:h-full lg:overflow-y-auto p-4 md:p-6 custom-scrollbar">
+            <div className="w-full lg:flex-1 lg:h-full lg:overflow-y-auto overflow-y-auto p-4 md:p-6 custom-scrollbar">
                 <div className="mb-4 md:mb-6">
                     <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
                     <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
@@ -279,6 +281,30 @@ const InvestPage: React.FC<InvestPageProps> = () => {
 
         </div>
     );
+
+    {/* ROI Details Modal */ }
+    {
+        showRoiModal && selectedOpp && (
+            <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50" onClick={() => setShowRoiModal(false)}>
+                <div className="bg-primary-light p-6 rounded-xl max-w-md w-full relative" onClick={(e) => e.stopPropagation()}>
+                    <button
+                        className="absolute top-2 right-2 text-gray-400 hover:text-white"
+                        onClick={() => setShowRoiModal(false)}
+                    >
+                        ✕
+                    </button>
+                    <h2 className="text-xl font-bold mb-4 text-white">
+                        ROI Details for {selectedOpp.title}
+                    </h2>
+                    <p className="text-typography-grey mb-2">Expected ROI: {selectedOpp.expectedRoiPct}%</p>
+                    <p className="text-typography-grey mb-2">Free Nights per Year: {Math.floor(freeNights)}</p>
+                    <p className="text-typography-grey mb-2">Estimated Country ADR: ${estimatedAdr}</p>
+                    <p className="text-typography-grey mb-2">Yearly Cash ROI: +${yearlyRoiVal.toLocaleString()} ({selectedOpp.expectedRoiPct}%)</p>
+                </div>
+            </div>
+        )
+    }
+
 };
 
 export default InvestPage;
