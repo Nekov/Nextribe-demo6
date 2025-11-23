@@ -23,7 +23,7 @@ export interface CountryData {
   progress: number; // 0-100
   ambassador?: Ambassador;
   description?: string;
-  
+
   // Specific Metrics
   locationsProposed: number;
   locationsTarget: number;
@@ -32,7 +32,7 @@ export interface CountryData {
   lawyerRecommended: boolean;
   ambassadorApplications: number;
   ambassadorTarget: number;
-  
+
   // Optional
   hospitalityPartner: boolean;
   contentCreators: number;
@@ -58,17 +58,17 @@ export interface TimeframeStats {
 
 export interface GlobalStats {
   totalDistributed: number;
-  
+
   // Enhanced Country Metrics
   activeCountriesOccupancy: { name: string; value: number; code: string };
   activeCountriesNights: { name: string; value: number; code: string };
-  
+
   // Expanded Active Countries logic
   activeCountriesStats: {
     development: number; // In Development or Operating
     totalProposed: number; // At least land proposed (includes all statuses >= PROPOSED)
   };
-  
+
   // Community Points with Timeframes
   communityPoints: {
     weekly: TimeframeStats;
@@ -81,6 +81,9 @@ export interface GlobalStats {
     current: number;
     target: number;
   };
+  // New fields for dashboard visualizations
+  nightsGrowth: { date: string; nights: number }[]; // Array of nightly totals over time
+  topCountries: { name: string; value: number; code: string }[]; // Ranked list of countries by metric
 }
 
 export interface UserInvestment {
