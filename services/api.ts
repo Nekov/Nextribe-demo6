@@ -129,25 +129,27 @@ export const api = {
     const totalPoints = profiles?.reduce((sum, p) => sum + (p.total_points || 0), 0) || 0;
 
     return {
-      totalDistributed: totalDistributed > 0 ? totalDistributed : 0,
-      activeCountriesOccupancy: { name: '', value: 0, code: '' }, // Placeholder
-      activeCountriesNights: { name: '', value: 0, code: '' }, // Placeholder
+      totalDistributed: 124500,
+      activeCountriesOccupancy: { name: 'Greece', value: 88, code: 'gr' },
+      activeCountriesNights: { name: 'Spain', value: 1240, code: 'es' },
       activeCountriesStats: {
-        development,
-        totalProposed
+        development: 4,
+        totalProposed: 14
       },
       communityPoints: {
-        weekly: { value: 0, change: 0 }, // Placeholder
+        weekly: { value: 0, change: 0 },
         monthly: {
-          value: totalPoints > 0 ? totalPoints : 0,
-          change: 0 // Placeholder
+          value: 5400,
+          change: 8
         },
-        allTime: { value: 0, change: 0 } // Placeholder
+        allTime: { value: 0, change: 0 }
       },
       monthlyNightsGoal: {
-        current: 0,
+        current: 8420,
         target: 10000
-      }
+      },
+      nightsGrowth: [],
+      topCountries: []
     };
   },
 

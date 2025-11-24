@@ -52,8 +52,14 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
     if (!loading && svgRef.current) {
       const svg = d3.select(svgRef.current);
       svg.call(zoom);
-      // Set initial zoom to minimum level (2.0)
-      svg.call(zoom.transform, d3.zoomIdentity.scale(2.0));
+
+      // Calculate initial transform to keep center fixed
+      // We want the center of the screen (width/2, height/2) to remain at the center
+      const k = 2.0; // Initial scale
+      const tx = (width / 2) * (1 - k);
+      const ty = (height / 2) * (1 - k);
+
+      svg.call(zoom.transform, d3.zoomIdentity.translate(tx, ty).scale(k));
     }
   }, [loading, zoom]);
 

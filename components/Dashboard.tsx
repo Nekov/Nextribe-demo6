@@ -206,16 +206,14 @@ const Dashboard: React.FC<DashboardProps> = ({ stats, leaderboard, onViewFullLea
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-auto lg:h-40">
                 <StatCard
                     title="Total Distributed"
-                    value="$566,444"
+                    value={`$${stats.totalDistributed.toLocaleString()}`}
                     icon={DollarSign}
-                    subValue="Paid to community"
+                    subValue="+12% this month"
                     colorClass="text-green-400"
                 />
                 <CommunityPointsCard points={stats.communityPoints} />
                 <ActiveCountriesCard stats={stats.activeCountriesStats} />
                 <NightsGoalCard current={stats.monthlyNightsGoal.current} target={stats.monthlyNightsGoal.target} />
-                <NightsGrowthChart data={stats.nightsGrowth} />
-                <NightsGrowthChart data={stats.nightsGrowth} />
             </div>
 
             {/* Middle Row: Country Highlights */}
@@ -231,20 +229,6 @@ const Dashboard: React.FC<DashboardProps> = ({ stats, leaderboard, onViewFullLea
                     title="Most Active Market (Volume)"
                     country={stats.activeCountriesNights}
                     value={stats.activeCountriesNights.value.toLocaleString()}
-                    subLabel="Nights Booked"
-                    type="nights"
-                />
-                <CountryHighlightCard
-                    title="Top Country (Occupancy) – Austria"
-                    country={{ name: "Austria", code: "at" }}
-                    value="78%"
-                    subLabel="Avg. Occupancy"
-                    type="occupancy"
-                />
-                <CountryHighlightCard
-                    title="Top Country (Nights) – Greece"
-                    country={{ name: "Greece", code: "gr" }}
-                    value={12345}
                     subLabel="Nights Booked"
                     type="nights"
                 />

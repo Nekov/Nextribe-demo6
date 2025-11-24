@@ -9,6 +9,7 @@ export const COLORS = {
   SIGNED: '#F97316', // Orange
   DEVELOPMENT: '#3F5B4C', // Forest Green
   OPERATING: '#988ACF', // Pastel Purple
+  GOLD: '#D9A441', // Gold
 
   BG: '#1E2233',
   TEXT: '#F2F2F2',
@@ -21,7 +22,7 @@ export const COLORS = {
 export const CURRENCY_RATES: Record<string, number> = {
   'USD': 1,
   'EUR': 0.92,
-  'SOL': 9.85, // Example rate
+  'SOL': 0.0066, // ~$150 USD
   'BTC': 0.000015, // Example rate
   'ETH': 0.00031
 };
