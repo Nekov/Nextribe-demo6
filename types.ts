@@ -107,6 +107,9 @@ export interface UserProfile {
   totalYearlyReturn: number; // USD
   totalYearlyReturnPct: number; // Average %
   remainingFreeNights: number;
+  usedFreeNights: number;
+  totalFreeNights: number;
+  monthlyRevenue: { month: string; amount: number }[];
   investments: UserInvestment[];
 }
 

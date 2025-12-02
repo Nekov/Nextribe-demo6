@@ -75,17 +75,55 @@ export const api = {
       return null;
     }
 
+    // Hardcoded profile for Nikolay Nekov as requested
     return {
-      name: data.name,
-      avatarUrl: data.avatar_url,
-      level: data.level,
-      totalPoints: data.total_points,
-      nextLevelPoints: data.next_level_points,
-      totalInvested: data.total_invested,
-      totalYearlyReturn: 0, // Calculate from investments later
-      totalYearlyReturnPct: 0, // Calculate from investments later
-      remainingFreeNights: data.remaining_free_nights,
-      investments: [] // Fetch separately if needed
+      name: 'Nikolay Nekov',
+      avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80', // Professional looking portrait
+      level: 'Visionary',
+      totalPoints: 15420,
+      nextLevelPoints: 20000,
+      totalInvested: 125000,
+      totalYearlyReturn: 15625,
+      totalYearlyReturnPct: 12.5,
+      remainingFreeNights: 12,
+      usedFreeNights: 3,
+      totalFreeNights: 15,
+      monthlyRevenue: [
+        { month: 'Jan', amount: 1200 },
+        { month: 'Feb', amount: 1350 },
+        { month: 'Mar', amount: 1100 },
+        { month: 'Apr', amount: 1450 },
+        { month: 'May', amount: 1600 },
+        { month: 'Jun', amount: 1850 },
+        { month: 'Jul', amount: 2100 },
+        { month: 'Aug', amount: 2300 },
+        { month: 'Sep', amount: 1950 },
+        { month: 'Oct', amount: 1500 },
+        { month: 'Nov', amount: 1300 },
+        { month: 'Dec', amount: 1650 },
+      ],
+      investments: [
+        {
+          id: '1',
+          name: 'Alpine Retreat',
+          location: 'Tyrol',
+          country: 'Austria',
+          image: 'https://images.unsplash.com/photo-1502784444187-359ac186c5bb?auto=format&fit=crop&w=800&q=80',
+          investmentSize: 50000,
+          yearlyReturnVal: 6250,
+          yearlyReturnPct: 12.5
+        },
+        {
+          id: '2',
+          name: 'Aegean Blue',
+          location: 'Santorini',
+          country: 'Greece',
+          image: 'https://images.unsplash.com/photo-1602343168117-bb8ffe3e2e9f?auto=format&fit=crop&w=800&q=80',
+          investmentSize: 75000,
+          yearlyReturnVal: 9375,
+          yearlyReturnPct: 12.5
+        }
+      ]
     };
   },
 
