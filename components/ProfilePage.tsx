@@ -15,7 +15,7 @@ interface ProfilePageProps {
 }
 
 const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
-    const [currency, setCurrency] = useState<string>('USD');
+    const [currency, setCurrency] = useState<string>('EUR');
 
     // Helper to format money based on selected currency
     const formatMoney = (usdAmount: number) => {
@@ -101,6 +101,66 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                 {/* Stats Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
 
+                    {/* Membership Level - Moved to First Position */}
+                    <div className="md:col-span-4 bg-primary-light p-6 rounded-3xl border border-white/5 shadow-xl h-full flex flex-col justify-between">
+                        <div>
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <h3 className="text-typography-grey text-sm font-medium uppercase tracking-wider">Status</h3>
+                                    <div className="text-2xl font-bold text-white mt-1">{profile.totalPoints.toLocaleString()} <span className="text-sm text-gold">pts</span></div>
+                                </div>
+                                <Trophy className="w-8 h-8 text-gold opacity-50" />
+                            </div>
+                            <div className="space-y-2">
+                                <div className="flex justify-between text-xs text-typography-grey">
+                                    <span>Next: {profile.nextLevelPoints.toLocaleString()}</span>
+                                    <span>{Math.round(levelProgress)}%</span>
+                                </div>
+                                <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-gradient-to-r from-gold to-yellow-200 rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)]"
+                                        style={{ width: `${levelProgress}%` }}
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Free Nights - Moved here to stack with Membership */}
+                        <div className="mt-6 pt-6 border-t border-white/5">
+                            <div className="flex items-center gap-2 mb-4">
+                                <div className="p-2 bg-purple-500/20 rounded-lg text-purple-400">
+                                    <Moon className="w-5 h-5" />
+                                </div>
+                                <h3 className="text-gray-300 text-sm font-medium uppercase tracking-wider">Free Nights</h3>
+                            </div>
+
+                            <div className="flex justify-between items-end mb-4">
+                                <div>
+                                    <div className="text-3xl font-bold text-white">{profile.remainingFreeNights}</div>
+                                    <div className="text-xs text-purple-300 mt-1">Remaining</div>
+                                </div>
+                                <div className="text-right">
+                                    <div className="text-xl font-bold text-gray-400">{profile.totalFreeNights}</div>
+                                    <div className="text-xs text-gray-500">Total / Year</div>
+                                </div>
+                            </div>
+
+                            {/* Progress Bar for Nights */}
+                            <div className="space-y-3">
+                                <div className="flex justify-between text-xs text-gray-400">
+                                    <span>Used: {profile.usedFreeNights}</span>
+                                    <span>{Math.round((profile.usedFreeNights / profile.totalFreeNights) * 100)}% Used</span>
+                                </div>
+                                <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full"
+                                        style={{ width: `${(profile.usedFreeNights / profile.totalFreeNights) * 100}%` }}
+                                    ></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     {/* Investment Stats - Large Card */}
                     <div className="md:col-span-8 bg-gradient-to-br from-primary-light to-primary p-8 rounded-3xl border border-white/5 shadow-xl relative overflow-hidden group">
                         <div className="absolute top-0 right-0 p-12 opacity-5 group-hover:opacity-10 transition-opacity duration-700">
@@ -174,72 +234,8 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                         </div>
                     </div>
 
-                    {/* Right Column Stats */}
-                    <div className="md:col-span-4 space-y-6">
-
-                        {/* Free Nights */}
-                        <div className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] p-6 rounded-3xl border border-white/5 shadow-xl relative overflow-hidden">
-                            <div className="absolute -right-4 -top-4 opacity-20">
-                                <Moon className="w-32 h-32 text-purple-400 blur-xl" />
-                            </div>
-                            <div className="relative z-10">
-                                <div className="flex items-center gap-2 mb-4">
-                                    <div className="p-2 bg-purple-500/20 rounded-lg text-purple-400">
-                                        <Moon className="w-5 h-5" />
-                                    </div>
-                                    <h3 className="text-gray-300 text-sm font-medium uppercase tracking-wider">Free Nights</h3>
-                                </div>
-
-                                <div className="flex justify-between items-end mb-6">
-                                    <div>
-                                        <div className="text-4xl font-bold text-white">{profile.remainingFreeNights}</div>
-                                        <div className="text-xs text-purple-300 mt-1">Remaining</div>
-                                    </div>
-                                    <div className="text-right">
-                                        <div className="text-xl font-bold text-gray-400">{profile.totalFreeNights}</div>
-                                        <div className="text-xs text-gray-500">Total / Year</div>
-                                    </div>
-                                </div>
-
-                                {/* Progress Bar for Nights */}
-                                <div className="space-y-3">
-                                    <div className="flex justify-between text-xs text-gray-400">
-                                        <span>Used: {profile.usedFreeNights}</span>
-                                        <span>{Math.round((profile.usedFreeNights / profile.totalFreeNights) * 100)}% Used</span>
-                                    </div>
-                                    <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-                                        <div
-                                            className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full"
-                                            style={{ width: `${(profile.usedFreeNights / profile.totalFreeNights) * 100}%` }}
-                                        ></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Membership Level */}
-                        <div className="bg-primary-light p-6 rounded-3xl border border-white/5 shadow-xl">
-                            <div className="flex justify-between items-start mb-4">
-                                <div>
-                                    <h3 className="text-typography-grey text-sm font-medium uppercase tracking-wider">Status</h3>
-                                    <div className="text-2xl font-bold text-white mt-1">{profile.totalPoints.toLocaleString()} <span className="text-sm text-gold">pts</span></div>
-                                </div>
-                                <Trophy className="w-8 h-8 text-gold opacity-50" />
-                            </div>
-                            <div className="space-y-2">
-                                <div className="flex justify-between text-xs text-typography-grey">
-                                    <span>Next: {profile.nextLevelPoints.toLocaleString()}</span>
-                                    <span>{Math.round(levelProgress)}%</span>
-                                </div>
-                                <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-gradient-to-r from-gold to-yellow-200 rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)]"
-                                        style={{ width: `${levelProgress}%` }}
-                                    ></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {/* Right Column Stats - REMOVED as they are now moved to the left */}
+                    {/* The content that was here (Free Nights and Membership Level) has been moved to the first column above */}
                 </div>
 
                 {/* Investments List */}
@@ -266,14 +262,18 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                 </div>
 
                                 <div className="p-6 flex-1 flex flex-col justify-between">
-                                    <div className="grid grid-cols-2 gap-4 mb-4">
+                                    <div className="grid grid-cols-3 gap-4 mb-4">
                                         <div className="bg-black/20 p-3 rounded-xl">
                                             <div className="text-[10px] uppercase text-typography-grey font-bold tracking-wider mb-1">Invested</div>
-                                            <div className="text-white font-bold text-lg">{formatMoney(inv.investmentSize)}</div>
+                                            <div className="text-white font-bold text-sm">{formatMoney(inv.investmentSize)}</div>
+                                        </div>
+                                        <div className="bg-black/20 p-3 rounded-xl">
+                                            <div className="text-[10px] uppercase text-typography-grey font-bold tracking-wider mb-1">Shares</div>
+                                            <div className="text-white font-bold text-sm">{inv.sharesOwned}</div>
                                         </div>
                                         <div className="bg-green-900/10 p-3 rounded-xl border border-green-500/10">
-                                            <div className="text-[10px] uppercase text-green-400/70 font-bold tracking-wider mb-1">Yearly Return</div>
-                                            <div className="text-green-400 font-bold text-lg">{formatMoney(inv.yearlyReturnVal)}</div>
+                                            <div className="text-[10px] uppercase text-green-400/70 font-bold tracking-wider mb-1">Return</div>
+                                            <div className="text-green-400 font-bold text-sm">{formatMoney(inv.yearlyReturnVal)}</div>
                                         </div>
                                     </div>
 

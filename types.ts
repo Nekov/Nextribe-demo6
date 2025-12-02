@@ -95,6 +95,7 @@ export interface UserInvestment {
   investmentSize: number; // USD
   yearlyReturnVal: number; // USD
   yearlyReturnPct: number; // %
+  sharesOwned: number;
 }
 
 export interface UserProfile {
