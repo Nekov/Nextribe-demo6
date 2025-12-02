@@ -108,22 +108,22 @@ export const api = {
           name: 'Alpine Retreat',
           location: 'Tyrol',
           country: 'Austria',
-          image: 'file:///Users/nick/.gemini/antigravity/brain/d9b34a8f-352a-4536-836e-7a18879c45cc/alpine_cabin_1764670025041.png',
+          image: '/alpine_cabin.png',
           investmentSize: 50000,
           yearlyReturnVal: 6250,
           yearlyReturnPct: 12.5,
-          sharesOwned: 50
+          sharesOwned: '1/8'
         },
         {
           id: '2',
           name: 'Aegean Blue',
           location: 'Santorini',
           country: 'Greece',
-          image: 'file:///Users/nick/.gemini/antigravity/brain/d9b34a8f-352a-4536-836e-7a18879c45cc/greek_cabin_1764670052246.png',
+          image: '/greek_cabin.png',
           investmentSize: 75000,
           yearlyReturnVal: 9375,
           yearlyReturnPct: 12.5,
-          sharesOwned: 75
+          sharesOwned: '1/4'
         }
       ]
     };
