@@ -138,7 +138,7 @@ const CountryDetail: React.FC<CountryDetailProps> = ({ country, onClose, onApply
             </h3>
 
             <ProgressBar
-              label="Locations Proposed"
+              label="Potential Land Plots"
               current={country.locationsProposed}
               target={country.locationsTarget}
             />
