@@ -53,7 +53,11 @@ VALUES
   ('JPN', 'Japan', 'proposed', 10, 'Expanding to the stunning landscapes of Japan with rich history and local charm.', 4, 10),
   ('USA', 'United States', 'none', 0, 'Expanding to the stunning landscapes of United States with rich history and local charm.', 0, 10),
   ('TUR', 'Turkey', 'none', 0, 'Expanding to the stunning landscapes of Turkey with rich history and local charm.', 0, 10),
-  ('HRV', 'Croatia', 'none', 0, 'Expanding to the stunning landscapes of Croatia with rich history and local charm.', 0, 10);
+  ('HRV', 'Croatia', 'none', 0, 'Expanding to the stunning landscapes of Croatia with rich history and local charm.', 0, 10),
+  ('SVK', 'Slovakia', 'proposed', 10, 'Discover the hidden gems of the High Tatras and sustainable tourism in Slovakia.', 2, 10),
+  ('FIN', 'Finland', 'proposed', 15, 'Experience the serenity of Nordic forests and lakes in Finland.', 3, 10),
+  ('PRT', 'Portugal', 'proposed', 20, 'Enjoy the sunny coastlines and vibrant culture of Portugal.', 4, 10),
+  ('CRI', 'Costa Rica', 'proposed', 25, 'Immerse yourself in the biodiversity and "Pura Vida" lifestyle of Costa Rica.', 5, 10);
 
 
 -- 3. Seed Opportunities (matches MOCK_OPPORTUNITIES)
@@ -65,7 +69,11 @@ VALUES
   ('33333333-3333-3333-3333-333333333333', 'River Canyon Lodge', 'Tara Canyon', 'MYS', 6, 145000, 85, 12.2, ARRAY['https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=600&auto=format&fit=crop'], ARRAY['Large Deck', 'BBQ Station', 'River Access', 'Starlink']),
   ('44444444-4444-4444-4444-444444444444', 'Tropical Jungle Dome', 'Ubud', 'MYS', 2, 95000, 40, 13.5, ARRAY['https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f8e?q=80&w=600&auto=format&fit=crop'], ARRAY['Infinity Pool', 'Jungle View', 'Yoga Deck', 'Scooter Incl.']),
   ('55555555-5555-5555-5555-555555555555', 'Nordic Aurora Glass Igloo', 'Rovaniemi', 'LTU', 2, 165000, 15, 10.2, ARRAY['https://images.unsplash.com/photo-1518182170546-0766ca6fdd69?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1445548671936-e1ff8a6a6b20?q=80&w=600&auto=format&fit=crop'], ARRAY['Glass Roof', 'Private Sauna', 'Floor Heating', 'Reindeer Safari']),
-  ('66666666-6666-6666-6666-666666666666', 'Desert Oasis Tiny Home', 'Joshua Tree', 'USA', 4, 135000, 70, 11.0, ARRAY['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1542324623-05c77e9b087d?q=80&w=600&auto=format&fit=crop'], ARRAY['Fire Pit', 'Stargazing Deck', 'Outdoor Shower', 'Solar Power']);
+  ('66666666-6666-6666-6666-666666666666', 'Desert Oasis Tiny Home', 'Joshua Tree', 'USA', 4, 135000, 70, 11.0, ARRAY['https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1542324623-05c77e9b087d?q=80&w=600&auto=format&fit=crop'], ARRAY['Fire Pit', 'Stargazing Deck', 'Outdoor Shower', 'Solar Power']),
+  ('77777777-7777-7777-7777-777777777777', 'High Tatras Eco Cabin', 'High Tatras', 'SVK', 4, 95000, 100, 12.5, ARRAY['https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=600&auto=format&fit=crop'], ARRAY['Mountain View', 'Hiking Trails', 'Sustainable Wood', 'Fireplace']),
+  ('88888888-8888-8888-8888-888888888888', 'Nordic Forest Tiny House', 'Nuuksio National Park', 'FIN', 2, 85000, 100, 11.8, ARRAY['https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1449156493391-d2cfa28e468b?q=80&w=600&auto=format&fit=crop'], ARRAY['Forest Immersion', 'Berry Picking', 'Minimalist Design', 'Sauna']),
+  ('99999999-9999-9999-9999-999999999999', 'Algarve Glamping Dome', 'Algarve', 'PRT', 2, 75000, 100, 14.0, ARRAY['https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop'], ARRAY['Ocean Breeze', 'Stargazing', 'Outdoor Bath', 'Yoga Deck']),
+  ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'Costa Rica Eco Lodge', 'Monteverde', 'CRI', 6, 180000, 100, 13.2, ARRAY['https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=600&auto=format&fit=crop'], ARRAY['Rainforest View', 'Wildlife Watching', 'Sustainable Materials', 'Hammocks']);
 
 -- 4. Seed Investments (matches MOCK_USER_PROFILE.investments)
 -- Linking Admin User to some opportunities

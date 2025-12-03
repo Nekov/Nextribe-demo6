@@ -144,7 +144,7 @@ const InvestPage: React.FC<InvestPageProps> = () => {
     const [showRoiModal, setShowRoiModal] = useState(false);
     const [sharesCount, setSharesCount] = useState<number>(1);
     const [loading, setLoading] = useState(true);
-    const [currency, setCurrency] = useState<string>('USD');
+    const [currency, setCurrency] = useState<string>('EUR');
 
     const rate = CURRENCY_RATES[currency];
 
