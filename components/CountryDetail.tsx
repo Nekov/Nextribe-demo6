@@ -11,26 +11,7 @@ interface CountryDetailProps {
   onApply: () => void;
 }
 
-const ProgressBar = ({ current, target, label, color = "text-gold" }: { current: number, target: number, label: string, color?: string }) => {
-  const percentage = Math.min(100, (current / target) * 100);
-
-  return (
-    <div className="mb-6">
-      <div className="flex justify-between text-sm mb-2">
-        <span className="font-medium text-typography-white flex items-center gap-2">
-          {label}
-        </span>
-        <span className="text-typography-grey">{current}/{target}</span>
-      </div>
-      <div className="h-2 w-full bg-primary rounded-full overflow-hidden">
-        <div
-          className={`h-full rounded-full ${percentage === 100 ? 'bg-secondary-teal' : 'bg-gold'}`}
-          style={{ width: `${percentage}%` }}
-        ></div>
-      </div>
-    </div>
-  );
-};
+import ProgressBar from './ProgressBar';
 
 const BooleanItem = ({ checked, label }: { checked: boolean, label: string }) => (
   <div className="flex justify-between items-center mb-6 py-1">

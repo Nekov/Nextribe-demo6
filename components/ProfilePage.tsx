@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import ProgressBar from './ProgressBar';
 import { UserProfile } from '../types';
 import { CURRENCY_RATES } from '../constants';
 import {
@@ -125,17 +126,13 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                 </div>
                                 <Trophy className="w-6 h-6 md:w-8 md:h-8 text-gold opacity-50" />
                             </div>
-                            <div className="space-y-2">
-                                <div className="flex justify-between text-xs text-typography-grey mb-1">
-                                    <span>Next: {profile.nextLevelPoints.toLocaleString()}</span>
-                                    <span>{Math.round(levelProgress)}%</span>
-                                </div>
-                                <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-gold rounded-full transition-all duration-1000 ease-out"
-                                        style={{ width: `${levelProgress}%` }}
-                                    ></div>
-                                </div>
+                            <div className="space-y-4">
+                                <ProgressBar
+                                    label="Level Progress"
+                                    current={profile.totalPoints}
+                                    target={profile.nextLevelPoints}
+                                    color="bg-gold"
+                                />
                             </div>
                         </div>
 
@@ -161,16 +158,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
 
                             {/* Progress Bar for Nights */}
                             <div className="space-y-3">
-                                <div className="flex justify-between text-xs text-gray-400 mb-1">
-                                    <span>Used: {profile.usedFreeNights}</span>
-                                    <span>{Math.round((profile.usedFreeNights / profile.totalFreeNights) * 100)}% Used</span>
-                                </div>
-                                <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-purple-500 rounded-full transition-all duration-1000 ease-out"
-                                        style={{ width: `${freeNightsProgress}%` }}
-                                    ></div>
-                                </div>
+                                <ProgressBar
+                                    label="Usage"
+                                    current={profile.usedFreeNights}
+                                    target={profile.totalFreeNights}
+                                    color="bg-purple-500"
+                                />
                             </div>
                         </div>
                     </div>
