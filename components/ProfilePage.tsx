@@ -35,11 +35,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
     const levelProgress = Math.min(100, (profile.totalPoints / profile.nextLevelPoints) * 100);
     const freeNightsProgress = Math.min(100, (profile.usedFreeNights / profile.totalFreeNights) * 100);
 
-    // Circle config
-    const radius1 = 50; // Inner (Status)
-    const radius2 = 65; // Outer (Free Nights)
-    const circumference1 = 2 * Math.PI * radius1;
-    const circumference2 = 2 * Math.PI * radius2;
+    // Helper to format money based on selected currency
 
     // Custom Tooltip for Recharts
     const CustomTooltip = ({ active, payload, label }: any) => {
@@ -63,36 +59,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                 {/* Header & Main Stats */}
                 <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center justify-between bg-primary-light/30 p-4 md:p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
                     <div className="flex items-center gap-4 md:gap-6">
-                        <div className="relative flex items-center justify-center m-4">
-                            {/* Progress Rings */}
-                            <svg className="absolute w-32 h-32 md:w-44 md:h-44 -rotate-90 pointer-events-none z-0" viewBox="0 0 150 150">
-                                <defs>
-                                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                        <feGaussianBlur stdDeviation="2" result="blur" />
-                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                                    </filter>
-                                </defs>
-
-                                {/* Inner Ring Background (Status) */}
-                                <circle cx="75" cy="75" r={radius1} fill="none" stroke="#D4AF37" strokeWidth="8" strokeOpacity="0.2" />
-                                {/* Inner Ring Progress (Gold - Status) */}
-                                <circle cx="75" cy="75" r={radius1} fill="none" stroke="#D4AF37" strokeWidth="8"
-                                    strokeDasharray={circumference1}
-                                    strokeDashoffset={circumference1 - (levelProgress / 100) * circumference1}
-                                    strokeLinecap="round"
-                                    className="transition-all duration-1000 ease-out drop-shadow-[0_0_4px_rgba(212,175,55,0.5)]"
-                                />
-
-                                {/* Outer Ring Background (Free Nights) */}
-                                <circle cx="75" cy="75" r={radius2} fill="none" stroke="#A855F7" strokeWidth="8" strokeOpacity="0.2" />
-                                {/* Outer Ring Progress (Purple - Free Nights) */}
-                                <circle cx="75" cy="75" r={radius2} fill="none" stroke="#A855F7" strokeWidth="8"
-                                    strokeDasharray={circumference2}
-                                    strokeDashoffset={circumference2 - (freeNightsProgress / 100) * circumference2}
-                                    strokeLinecap="round"
-                                    className="transition-all duration-1000 ease-out drop-shadow-[0_0_4px_rgba(168,85,247,0.5)]"
-                                />
-                            </svg>
+                        <div className="relative flex items-center justify-center">
 
                             <div className="relative z-10">
                                 <img
@@ -155,6 +122,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                     <span>Next: {profile.nextLevelPoints.toLocaleString()}</span>
                                     <span>{Math.round(levelProgress)}%</span>
                                 </div>
+                                <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden">
+                                    <div
+                                        className="bg-gold h-full rounded-full transition-all duration-1000 ease-out"
+                                        style={{ width: `${levelProgress}%` }}
+                                    />
+                                </div>
                             </div>
                         </div>
 
@@ -183,6 +156,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                 <div className="flex justify-between text-xs text-gray-400">
                                     <span>Used: {profile.usedFreeNights}</span>
                                     <span>{Math.round((profile.usedFreeNights / profile.totalFreeNights) * 100)}% Used</span>
+                                </div>
+                                <div className="w-full bg-black/40 h-2 rounded-full overflow-hidden">
+                                    <div
+                                        className="bg-purple-500 h-full rounded-full transition-all duration-1000 ease-out"
+                                        style={{ width: `${freeNightsProgress}%` }}
+                                    />
                                 </div>
                             </div>
                         </div>
