@@ -33,6 +33,13 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
     };
 
     const levelProgress = Math.min(100, (profile.totalPoints / profile.nextLevelPoints) * 100);
+    const freeNightsProgress = Math.min(100, (profile.usedFreeNights / profile.totalFreeNights) * 100);
+
+    // Circle config
+    const radius1 = 54; // Inner (Status)
+    const radius2 = 62; // Outer (Free Nights)
+    const circumference1 = 2 * Math.PI * radius1;
+    const circumference2 = 2 * Math.PI * radius2;
 
     // Custom Tooltip for Recharts
     const CustomTooltip = ({ active, payload, label }: any) => {
@@ -56,14 +63,36 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                 {/* Header & Main Stats */}
                 <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center justify-between bg-primary-light/30 p-4 md:p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
                     <div className="flex items-center gap-4 md:gap-6">
-                        <div className="relative">
-                            <img
-                                src={profile.avatarUrl}
-                                alt={profile.name}
-                                className="w-16 h-16 md:w-24 md:h-24 rounded-full border-4 border-gold/20 shadow-2xl object-cover"
-                            />
-                            <div className="absolute -bottom-2 -right-2 bg-gold text-primary text-xs font-bold px-2 py-1 rounded-full border-2 border-primary shadow-lg flex items-center gap-1">
-                                <Award className="w-3 h-3" /> {profile.level}
+                        <div className="relative flex items-center justify-center">
+                            {/* Progress Rings */}
+                            <svg className="absolute w-28 h-28 md:w-40 md:h-40 -rotate-90 pointer-events-none z-0" viewBox="0 0 140 140">
+                                {/* Inner Ring Background */}
+                                <circle cx="70" cy="70" r={radius1} fill="none" stroke="#333" strokeWidth="4" />
+                                {/* Inner Ring Progress (Gold - Status) */}
+                                <circle cx="70" cy="70" r={radius1} fill="none" stroke="#D4AF37" strokeWidth="4"
+                                    strokeDasharray={circumference1}
+                                    strokeDashoffset={circumference1 - (levelProgress / 100) * circumference1}
+                                    strokeLinecap="round"
+                                />
+                                {/* Outer Ring Background */}
+                                <circle cx="70" cy="70" r={radius2} fill="none" stroke="#333" strokeWidth="4" />
+                                {/* Outer Ring Progress (Purple - Free Nights) */}
+                                <circle cx="70" cy="70" r={radius2} fill="none" stroke="#A855F7" strokeWidth="4"
+                                    strokeDasharray={circumference2}
+                                    strokeDashoffset={circumference2 - (freeNightsProgress / 100) * circumference2}
+                                    strokeLinecap="round"
+                                />
+                            </svg>
+
+                            <div className="relative z-10">
+                                <img
+                                    src={profile.avatarUrl}
+                                    alt={profile.name}
+                                    className="w-16 h-16 md:w-24 md:h-24 rounded-full border-4 border-primary shadow-2xl object-cover"
+                                />
+                                <div className="absolute -bottom-2 -right-2 bg-gold text-primary text-xs font-bold px-2 py-1 rounded-full border-2 border-primary shadow-lg flex items-center gap-1">
+                                    <Award className="w-3 h-3" /> {profile.level}
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -116,12 +145,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                     <span>Next: {profile.nextLevelPoints.toLocaleString()}</span>
                                     <span>{Math.round(levelProgress)}%</span>
                                 </div>
-                                <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-gradient-to-r from-gold to-yellow-200 rounded-full shadow-[0_0_10px_rgba(212,175,55,0.5)]"
-                                        style={{ width: `${levelProgress}%` }}
-                                    ></div>
-                                </div>
                             </div>
                         </div>
 
@@ -151,12 +174,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                     <span>Used: {profile.usedFreeNights}</span>
                                     <span>{Math.round((profile.usedFreeNights / profile.totalFreeNights) * 100)}% Used</span>
                                 </div>
-                                <div className="h-2 w-full bg-gray-800 rounded-full overflow-hidden">
-                                    <div
-                                        className="h-full bg-gradient-to-r from-purple-600 to-purple-400 rounded-full"
-                                        style={{ width: `${(profile.usedFreeNights / profile.totalFreeNights) * 100}%` }}
-                                    ></div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -180,9 +197,9 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                 </div>
                                 <div className="text-left md:text-right w-full md:w-auto">
                                     <div className="text-sm text-typography-grey mb-1">Yearly Return</div>
-                                    <div className="text-xl md:text-2xl font-bold text-green-400 flex items-center md:justify-end gap-2">
+                                    <div className="text-3xl md:text-5xl font-bold text-green-400 flex items-center md:justify-end gap-2">
                                         +{formatMoney(profile.totalYearlyReturn)}
-                                        <span className="text-xs bg-green-400/20 text-green-400 px-2 py-1 rounded-full font-mono">
+                                        <span className="text-xs bg-green-400/20 text-green-400 px-2 py-1 rounded-full font-mono self-center">
                                             {profile.totalYearlyReturnPct}% APY
                                         </span>
                                     </div>
@@ -233,9 +250,6 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                             </div>
                         </div>
                     </div>
-
-                    {/* Right Column Stats - REMOVED as they are now moved to the left */}
-                    {/* The content that was here (Free Nights and Membership Level) has been moved to the first column above */}
                 </div>
 
                 {/* Investments List */}

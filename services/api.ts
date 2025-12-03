@@ -78,7 +78,7 @@ export const api = {
     // Hardcoded profile for Nikolay Nekov as requested
     return {
       name: 'Nikolay Nekov',
-      avatarUrl: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=256&q=80', // Professional looking portrait
+      avatarUrl: '/profile_nikolay.png', // Updated profile image
       level: 'Visionary',
       totalPoints: 15420,
       nextLevelPoints: 20000,

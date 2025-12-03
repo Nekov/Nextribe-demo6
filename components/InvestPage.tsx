@@ -192,10 +192,51 @@ const InvestPage: React.FC<InvestPageProps> = () => {
     const estimatedAdr = COUNTRY_ADR_MAP[selectedOpp.country] || COUNTRY_ADR_MAP['Unknown'];
 
     return (
-        <div className="lg:h-full flex flex-col-reverse lg:flex-row h-screen overflow-y-auto bg-[#151725]">
+        <div className="lg:h-full flex flex-col lg:flex-row h-full lg:overflow-hidden overflow-y-auto bg-[#151725]">
 
-            {/* Right Side: Calculator (appears second on mobile due to flex-col-reverse) */}
-            <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 lg:h-full overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl lg:z-20 relative shrink-0">
+            {/* Left Side: Opportunities Grid */}
+            <div className="w-full shrink-0 lg:shrink lg:flex-1 lg:h-full lg:overflow-y-auto p-4 md:p-6 custom-scrollbar">
+                <div className="mb-4 md:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
+                    <div>
+                        <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
+                        <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
+                    </div>
+
+                    {/* Currency Selector */}
+                    <div className="flex bg-primary border border-gray-700 rounded-lg p-1">
+                        {Object.keys(CURRENCY_RATES).map((curr) => (
+                            <button
+                                key={curr}
+                                onClick={() => setCurrency(curr)}
+                                className={`px-3 py-1.5 text-xs font-bold rounded transition-colors ${currency === curr ? 'bg-gold text-primary' : 'text-typography-grey hover:text-white'}`}
+                            >
+                                {curr}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 md:gap-6 pb-6">
+                    {opportunities.map(opp => (
+                        <OpportunityCard
+                            key={opp.id}
+                            opportunity={opp}
+                            onSelect={() => setSelectedOpp(opp)}
+                            isSelected={selectedOpp.id === opp.id}
+                            currency={currency}
+                            rate={rate}
+                            onRoiClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedOpp(opp);
+                                setShowRoiModal(true);
+                            }}
+                        />
+                    ))}
+                </div>
+            </div>
+
+            {/* Right Side: Calculator */}
+            <div className="w-full lg:w-[400px] bg-primary border-t lg:border-t-0 lg:border-l border-gray-800 lg:h-full lg:overflow-y-auto custom-scrollbar p-4 md:p-6 shadow-2xl lg:z-20 relative shrink-0">
                 <div className="lg:sticky top-0 bg-primary pb-4 border-b border-gray-800 mb-6">
                     <h2 className="text-lg md:text-xl font-bold text-white flex items-center gap-2">
                         <DollarSign className="text-gold w-5 h-5" /> ROI Calculator
@@ -299,47 +340,6 @@ const InvestPage: React.FC<InvestPageProps> = () => {
                         *Projections are estimates based on historical data and market trends. Returns are not guaranteed.
                     </p>
 
-                </div>
-            </div>
-
-            {/* Left Side: Opportunities Grid (appears first on mobile due to flex-col-reverse) */}
-            <div className="w-full lg:flex-1 lg:h-full lg:overflow-y-auto overflow-y-auto p-4 md:p-6 custom-scrollbar">
-                <div className="mb-4 md:mb-6 flex flex-col md:flex-row md:items-end justify-between gap-4">
-                    <div>
-                        <h1 className="text-xl md:text-2xl font-bold text-white mb-2">Nextribe Projects</h1>
-                        <p className="text-typography-grey text-xs md:text-sm">Select a project from our global network to simulate your returns.</p>
-                    </div>
-
-                    {/* Currency Selector */}
-                    <div className="flex bg-primary border border-gray-700 rounded-lg p-1">
-                        {Object.keys(CURRENCY_RATES).map((curr) => (
-                            <button
-                                key={curr}
-                                onClick={() => setCurrency(curr)}
-                                className={`px-3 py-1.5 text-xs font-bold rounded transition-colors ${currency === curr ? 'bg-gold text-primary' : 'text-typography-grey hover:text-white'}`}
-                            >
-                                {curr}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-4 md:gap-6 pb-6">
-                    {opportunities.map(opp => (
-                        <OpportunityCard
-                            key={opp.id}
-                            opportunity={opp}
-                            onSelect={() => setSelectedOpp(opp)}
-                            isSelected={selectedOpp.id === opp.id}
-                            currency={currency}
-                            rate={rate}
-                            onRoiClick={(e) => {
-                                e.stopPropagation();
-                                setSelectedOpp(opp);
-                                setShowRoiModal(true);
-                            }}
-                        />
-                    ))}
                 </div>
             </div>
 
