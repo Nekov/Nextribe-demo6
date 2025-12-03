@@ -67,34 +67,7 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                     <div className="flex items-center gap-4 md:gap-6 w-full md:w-auto flex-col md:flex-row">
                         <div className="relative flex items-center justify-center my-6 md:m-4">
                             {/* Progress Rings */}
-                            <svg className="absolute w-[80vw] h-[80vw] max-w-[300px] max-h-[300px] md:w-44 md:h-44 -rotate-90 pointer-events-none z-0" viewBox="0 0 150 150">
-                                <defs>
-                                    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
-                                        <feGaussianBlur stdDeviation="2" result="blur" />
-                                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
-                                    </filter>
-                                </defs>
 
-                                {/* Inner Ring Background (Status) */}
-                                <circle cx="75" cy="75" r={radius1} fill="none" stroke="#D4AF37" strokeWidth="8" strokeOpacity="0.2" />
-                                {/* Inner Ring Progress (Gold - Status) */}
-                                <circle cx="75" cy="75" r={radius1} fill="none" stroke="#D4AF37" strokeWidth="8"
-                                    strokeDasharray={circumference1}
-                                    strokeDashoffset={circumference1 - (levelProgress / 100) * circumference1}
-                                    strokeLinecap="round"
-                                    className="transition-all duration-1000 ease-out drop-shadow-[0_0_4px_rgba(212,175,55,0.5)]"
-                                />
-
-                                {/* Outer Ring Background (Free Nights) */}
-                                <circle cx="75" cy="75" r={radius2} fill="none" stroke="#A855F7" strokeWidth="8" strokeOpacity="0.2" />
-                                {/* Outer Ring Progress (Purple - Free Nights) */}
-                                <circle cx="75" cy="75" r={radius2} fill="none" stroke="#A855F7" strokeWidth="8"
-                                    strokeDasharray={circumference2}
-                                    strokeDashoffset={circumference2 - (freeNightsProgress / 100) * circumference2}
-                                    strokeLinecap="round"
-                                    className="transition-all duration-1000 ease-out drop-shadow-[0_0_4px_rgba(168,85,247,0.5)]"
-                                />
-                            </svg>
 
                             <div className="relative z-10">
                                 <img
@@ -153,9 +126,15 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                                 <Trophy className="w-6 h-6 md:w-8 md:h-8 text-gold opacity-50" />
                             </div>
                             <div className="space-y-2">
-                                <div className="flex justify-between text-xs text-typography-grey">
+                                <div className="flex justify-between text-xs text-typography-grey mb-1">
                                     <span>Next: {profile.nextLevelPoints.toLocaleString()}</span>
                                     <span>{Math.round(levelProgress)}%</span>
+                                </div>
+                                <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-gold rounded-full transition-all duration-1000 ease-out"
+                                        style={{ width: `${levelProgress}%` }}
+                                    ></div>
                                 </div>
                             </div>
                         </div>
@@ -182,9 +161,15 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
 
                             {/* Progress Bar for Nights */}
                             <div className="space-y-3">
-                                <div className="flex justify-between text-xs text-gray-400">
+                                <div className="flex justify-between text-xs text-gray-400 mb-1">
                                     <span>Used: {profile.usedFreeNights}</span>
                                     <span>{Math.round((profile.usedFreeNights / profile.totalFreeNights) * 100)}% Used</span>
+                                </div>
+                                <div className="w-full h-2 bg-gray-700 rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full bg-purple-500 rounded-full transition-all duration-1000 ease-out"
+                                        style={{ width: `${freeNightsProgress}%` }}
+                                    ></div>
                                 </div>
                             </div>
                         </div>
