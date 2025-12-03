@@ -55,10 +55,10 @@ VALUES
   ('USA', 'United States', 'none', 0, 'Expanding to the stunning landscapes of United States with rich history and local charm.', 0, 10),
   ('TUR', 'Turkey', 'none', 0, 'Expanding to the stunning landscapes of Turkey with rich history and local charm.', 0, 10),
   ('HRV', 'Croatia', 'none', 0, 'Expanding to the stunning landscapes of Croatia with rich history and local charm.', 0, 10),
-  ('SVK', 'Slovakia', 'proposed', 10, 'Discover the hidden gems of the High Tatras and sustainable tourism in Slovakia.', 2, 10),
-  ('FIN', 'Finland', 'proposed', 15, 'Experience the serenity of Nordic forests and lakes in Finland.', 3, 10),
-  ('PRT', 'Portugal', 'proposed', 20, 'Enjoy the sunny coastlines and vibrant culture of Portugal.', 4, 10),
-  ('CRI', 'Costa Rica', 'proposed', 25, 'Immerse yourself in the biodiversity and "Pura Vida" lifestyle of Costa Rica.', 5, 10);
+  ('SVK', 'Slovakia', 'none', 0, 'Discover the hidden gems of the High Tatras and sustainable tourism in Slovakia.', 2, 10),
+  ('FIN', 'Finland', 'none', 0, 'Experience the serenity of Nordic forests and lakes in Finland.', 3, 10),
+  ('PRT', 'Portugal', 'none', 0, 'Enjoy the sunny coastlines and vibrant culture of Portugal.', 4, 10),
+  ('CRI', 'Costa Rica', 'none', 0, 'Immerse yourself in the biodiversity and "Pura Vida" lifestyle of Costa Rica.', 5, 10);
 
 
 -- 3. Seed Opportunities (matches MOCK_OPPORTUNITIES)

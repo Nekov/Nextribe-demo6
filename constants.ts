@@ -47,7 +47,7 @@ export const COUNTRY_STATUS_MAP: Record<string, CountryStatus> = {
   'SVN': CountryStatus.PROPOSED, // Slovenia
   'LVA': CountryStatus.PROPOSED, // Latvia
 
-  // Defaults/Previous (Resetting others to NONE/Available as implied)
+  // Defaults/Previous (Resetting others to NONE/Available)
   'MYS': CountryStatus.NONE,
   'FRA': CountryStatus.NONE,
   'DEU': CountryStatus.NONE,
@@ -58,10 +58,10 @@ export const COUNTRY_STATUS_MAP: Record<string, CountryStatus> = {
   'TUR': CountryStatus.NONE,
   'HRV': CountryStatus.NONE,
   'GRC': CountryStatus.NONE,
-  'SVK': CountryStatus.PROPOSED,
-  'FIN': CountryStatus.PROPOSED,
-  'PRT': CountryStatus.PROPOSED,
-  'CRI': CountryStatus.PROPOSED
+  'SVK': CountryStatus.NONE, // Slovakia - Changed to None/Available per "All other countryes are empty"
+  'FIN': CountryStatus.NONE, // Finland - Changed to None/Available
+  'PRT': CountryStatus.NONE, // Portugal - Changed to None/Available
+  'CRI': CountryStatus.NONE  // Costa Rica - Changed to None/Available
 };
 
 // Estimated Average Daily Rate (ADR) per country in USD
