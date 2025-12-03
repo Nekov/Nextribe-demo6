@@ -63,21 +63,21 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ profile }) => {
                 {/* Header & Main Stats */}
                 <div className="flex flex-col md:flex-row gap-4 md:gap-8 items-start md:items-center justify-between bg-primary-light/30 p-4 md:p-6 rounded-2xl border border-white/5 backdrop-blur-sm">
                     <div className="flex items-center gap-4 md:gap-6">
-                        <div className="relative flex items-center justify-center">
+                        <div className="relative flex items-center justify-center m-4">
                             {/* Progress Rings */}
                             <svg className="absolute w-28 h-28 md:w-40 md:h-40 -rotate-90 pointer-events-none z-0" viewBox="0 0 140 140">
                                 {/* Inner Ring Background */}
-                                <circle cx="70" cy="70" r={radius1} fill="none" stroke="#333" strokeWidth="4" />
+                                <circle cx="70" cy="70" r={radius1} fill="none" stroke="#333" strokeWidth="6" />
                                 {/* Inner Ring Progress (Gold - Status) */}
-                                <circle cx="70" cy="70" r={radius1} fill="none" stroke="#D4AF37" strokeWidth="4"
+                                <circle cx="70" cy="70" r={radius1} fill="none" stroke="#D4AF37" strokeWidth="6"
                                     strokeDasharray={circumference1}
                                     strokeDashoffset={circumference1 - (levelProgress / 100) * circumference1}
                                     strokeLinecap="round"
                                 />
                                 {/* Outer Ring Background */}
-                                <circle cx="70" cy="70" r={radius2} fill="none" stroke="#333" strokeWidth="4" />
+                                <circle cx="70" cy="70" r={radius2} fill="none" stroke="#333" strokeWidth="6" />
                                 {/* Outer Ring Progress (Purple - Free Nights) */}
-                                <circle cx="70" cy="70" r={radius2} fill="none" stroke="#A855F7" strokeWidth="4"
+                                <circle cx="70" cy="70" r={radius2} fill="none" stroke="#A855F7" strokeWidth="6"
                                     strokeDasharray={circumference2}
                                     strokeDashoffset={circumference2 - (freeNightsProgress / 100) * circumference2}
                                     strokeLinecap="round"
