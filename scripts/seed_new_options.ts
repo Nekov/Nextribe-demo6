@@ -74,6 +74,18 @@ const newOpportunities = [
         expected_roi_pct: 13.2,
         images: ['https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=600&auto=format&fit=crop'],
         amenities: ['Rainforest View', 'Wildlife Watching', 'Sustainable Materials', 'Hammocks']
+    },
+    {
+        id: 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb',
+        title: 'Ancient Forest Treehouse',
+        location: 'Bialowieza Forest',
+        country_id: 'POL',
+        capacity: 2,
+        total_price: 110000,
+        available_shares_pct: 100,
+        expected_roi_pct: 12.8,
+        images: ['https://images.unsplash.com/photo-1488413587848-2604974975d0?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=600&auto=format&fit=crop'],
+        amenities: ['Treehouse Living', 'Bison Watching', 'Secluded', 'Nature Sounds']
     }
 ];
 

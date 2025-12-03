@@ -278,7 +278,7 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
           {geographies?.features.map((feature, i) => {
             const d = pathGenerator(feature);
             const countryId = feature.id?.toString().padStart(3, '0') || '';
-            const { status } = getCountryCodeAndStatus(countryId);
+            const { code, status } = getCountryCodeAndStatus(countryId);
             const fillColor = getStatusColor(status);
             const isHovered = hoveredCountryId === countryId;
 
@@ -295,7 +295,7 @@ const WorldMap: React.FC<WorldMapProps> = ({ onCountryClick, className, countrie
                 onMouseLeave={handleMouseLeave}
                 onClick={(e) => {
                   e.stopPropagation();
-                  onCountryClick(countryId, getCountryName(feature));
+                  onCountryClick(code, getCountryName(feature));
                 }}
               />
             );
