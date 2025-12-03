@@ -12,7 +12,12 @@ if (!supabaseUrl || !supabaseServiceKey) {
     process.exit(1);
 }
 
-const supabase = createClient(supabaseUrl, supabaseServiceKey);
+const supabase = createClient(supabaseUrl, supabaseServiceKey, {
+    auth: {
+        autoRefreshToken: false,
+        persistSession: false
+    }
+});
 
 const newCountries = [
     { id: 'SVK', name: 'Slovakia', status: 'proposed', progress: 10, description: 'Discover the hidden gems of the High Tatras and sustainable tourism in Slovakia.', locations_proposed: 2, locations_target: 10 },
@@ -31,7 +36,7 @@ const newOpportunities = [
         total_price: 95000,
         available_shares_pct: 100,
         expected_roi_pct: 12.5,
-        images: ['https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1542718610-a1d656d1884c?q=80&w=600&auto=format&fit=crop'],
+        images: ['https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1510798831971-661eb04b3739?q=80&w=600&auto=format&fit=crop'],
         amenities: ['Mountain View', 'Hiking Trails', 'Sustainable Wood', 'Fireplace']
     },
     {
@@ -43,7 +48,7 @@ const newOpportunities = [
         total_price: 85000,
         available_shares_pct: 100,
         expected_roi_pct: 11.8,
-        images: ['https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1449156493391-d2cfa28e468b?q=80&w=600&auto=format&fit=crop'],
+        images: ['https://images.unsplash.com/photo-1504280506541-aca1d6d885b6?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1449156493391-d2cfa28e468b?q=80&w=600&auto=format&fit=crop'],
         amenities: ['Forest Immersion', 'Berry Picking', 'Minimalist Design', 'Sauna']
     },
     {
@@ -55,7 +60,7 @@ const newOpportunities = [
         total_price: 75000,
         available_shares_pct: 100,
         expected_roi_pct: 14.0,
-        images: ['https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop'],
+        images: ['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1478131143081-80f7f84ca84d?q=80&w=600&auto=format&fit=crop'],
         amenities: ['Ocean Breeze', 'Stargazing', 'Outdoor Bath', 'Yoga Deck']
     },
     {
@@ -67,7 +72,7 @@ const newOpportunities = [
         total_price: 180000,
         available_shares_pct: 100,
         expected_roi_pct: 13.2,
-        images: ['https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=600&auto=format&fit=crop'],
+        images: ['https://images.unsplash.com/photo-1590523741831-ab7e8b8f9c7f?q=80&w=600&auto=format&fit=crop', 'https://images.unsplash.com/photo-1590523277543-a94d2e4eb00b?q=80&w=600&auto=format&fit=crop'],
         amenities: ['Rainforest View', 'Wildlife Watching', 'Sustainable Materials', 'Hammocks']
     }
 ];

@@ -38,27 +38,30 @@ export const COUNTRY_STATUS_MAP: Record<string, CountryStatus> = {
   'AUT': CountryStatus.SIGNED, // Austria
 
   // Ambassador
-  'ROU': CountryStatus.AMBASSADOR, // Romania
-  'GRC': CountryStatus.AMBASSADOR, // Greece
-  'SVN': CountryStatus.AMBASSADOR, // Slovenia
   'ITA': CountryStatus.AMBASSADOR, // Italy
-  'MYS': CountryStatus.AMBASSADOR, // Malaysia
+  'LTU': CountryStatus.AMBASSADOR, // Lithuania
   'CYP': CountryStatus.AMBASSADOR, // Cyprus
-
-  // Keeping existing ones for richness if not conflicting
-  'FRA': CountryStatus.AMBASSADOR,
-  'DEU': CountryStatus.AMBASSADOR,
-  'GBR': CountryStatus.AMBASSADOR,
+  'ROU': CountryStatus.AMBASSADOR, // Romania
 
   // Land Proposed
-  'LTU': CountryStatus.PROPOSED, // Lithuania
-  'POL': CountryStatus.PROPOSED, // Poland
-  'JPN': CountryStatus.PROPOSED, // Japan
+  'SVN': CountryStatus.PROPOSED, // Slovenia
+  'LVA': CountryStatus.PROPOSED, // Latvia
 
-  // Defaults/Previous (Optional, can be cleared if strict adherence needed)
+  // Defaults/Previous (Resetting others to NONE/Available as implied)
+  'MYS': CountryStatus.NONE,
+  'FRA': CountryStatus.NONE,
+  'DEU': CountryStatus.NONE,
+  'GBR': CountryStatus.NONE,
+  'POL': CountryStatus.NONE,
+  'JPN': CountryStatus.NONE,
   'USA': CountryStatus.NONE,
   'TUR': CountryStatus.NONE,
   'HRV': CountryStatus.NONE,
+  'GRC': CountryStatus.NONE,
+  'SVK': CountryStatus.PROPOSED,
+  'FIN': CountryStatus.PROPOSED,
+  'PRT': CountryStatus.PROPOSED,
+  'CRI': CountryStatus.PROPOSED
 };
 
 // Estimated Average Daily Rate (ADR) per country in USD
